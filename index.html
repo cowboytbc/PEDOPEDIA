@@ -26,6 +26,28 @@
     </div>
 
     <div class="container">
+        <!-- Hamburger Menu -->
+        <div class="hamburger-menu" id="hamburgerMenu">
+            <button class="hamburger-btn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <!-- Overlay Menu -->
+        <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()">
+            <div class="menu-content" onclick="event.stopPropagation()">
+                <button class="menu-close" onclick="toggleMenu()">×</button>
+                <nav class="menu-nav">
+                    <a href="index.html" class="menu-item">🏠 Home</a>
+                    <a href="whitepaper.html" class="menu-item">📄 Whitepaper</a>
+                    <a href="#" onclick="scrollToFooter()" class="menu-item">💎 Token Info</a>
+                    <a href="https://github.com/cowboytbc/PEDOPEDIA" target="_blank" class="menu-item">💻 GitHub</a>
+                </nav>
+            </div>
+        </div>
+
         <header>
             <div class="header-content">
                 <img src="LOGO.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
@@ -85,7 +107,16 @@
                 <div class="crypto-branding">
                     <h3>PEDOPEDIA</h3>
                     <p class="crypto-ticker">$PEDOPEDIA</p>
-                    <p class="crypto-ca">CA - <span class="ca-address">ALcJrbUsQ8vqWAR76jAeM7vmQZtUvotuEDUZiLKxpump</span></p>
+                    <div class="ca-container">
+                        <p class="crypto-ca">CONTRACT ADDRESS (SOLANA)</p>
+                        <div class="ca-copy-box">
+                            <span class="ca-address" id="caAddress">ALcJrbUsQ8vqWAR76jAeM7vmQZtUvotuEDUZiLKxpump</span>
+                            <button class="copy-btn" onclick="copyCA()" title="Copy address">
+                                <span class="copy-icon">📋</span>
+                                <span class="copied-text">Copied!</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>

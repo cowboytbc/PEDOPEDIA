@@ -160,15 +160,41 @@ function displayResults(results, query) {
     statsDiv.innerHTML = `Found ${results.length} document${results.length !== 1 ? 's' : ''} matching "${escapeHtml(query)}"`;
     
     let html = '';
-    results.forEach(result => {
+    results.forEach((result, index) => {
         const excerpt = getExcerpt(result.content, query, result.matches[0]);
+        const resultId = `result-${index}`;
+        const fullContentId = `full-content-${index}`;
+        const aiExplainId = `ai-explain-${index}`;
+        
         html += `
             <div class="result-item">
-                <div class="result-header">
-                    <div class="result-title">${escapeHtml(result.title)}</div>
+                <div class="result-header" onclick="toggleResultExpand('${resultId}')">
+                    <div class="result-title-group">
+                        <span class="expand-icon" id="icon-${resultId}">▶</span>
+                        <div class="result-title">${escapeHtml(result.title)}</div>
+                    </div>
                     <div class="result-meta">${result.relevance} match${result.relevance !== 1 ? 'es' : ''}</div>
                 </div>
+                
                 <div class="result-excerpt">${excerpt}</div>
+                
+                <div class="result-full-content collapsed" id="${fullContentId}">
+                    <div class="full-text">${escapeHtml(result.content).replace(/\n/g, '<br>')}</div>
+                </div>
+                
+                <div class="result-actions">
+                    <button class="action-btn expand-btn" onclick="toggleFullContent('${fullContentId}', '${resultId}')">
+                        <span id="expand-text-${resultId}">Read Full Document</span>
+                    </button>
+                    <button class="action-btn ai-btn" onclick="explainWithAI('${aiExplainId}', ${index})">
+                        🤖 AI Explain in Simple Terms
+                    </button>
+                </div>
+                
+                <div class="ai-explanation collapsed" id="${aiExplainId}">
+                    <div class="ai-loading">Analyzing document with AI...</div>
+                </div>
+                
                 <div class="result-footer">
                     <span>Source: ${escapeHtml(result.source)}</span>
                     ${result.date ? `<span>Date: ${escapeHtml(result.date)}</span>` : ''}
@@ -179,6 +205,9 @@ function displayResults(results, query) {
     });
     
     resultsDiv.innerHTML = html;
+    
+    // Store results globally for AI explanations
+    window.currentSearchResults = results;
 }
 
 // Get an excerpt from the content with highlighted search terms
@@ -279,4 +308,88 @@ function populateDocumentLibrary() {
 function toggleLibrary() {
     const panel = document.getElementById('libraryPanel');
     panel.classList.toggle('collapsed');
+}
+
+// Toggle hamburger menu
+function toggleMenu() {
+    const overlay = document.getElementById('menuOverlay');
+    overlay.classList.toggle('active');
+    document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+}
+
+// Scroll to footer (token info)
+function scrollToFooter() {
+    document.querySelector('footer').scrollIntoView({ behavior: 'smooth' });
+    toggleMenu();
+}
+
+// Copy CA address
+function copyCA() {
+    const caAddress = document.getElementById('caAddress').textContent;
+    navigator.clipboard.writeText(caAddress).then(() => {
+        const btn = event.target.closest('.copy-btn');
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+}
+
+// Toggle result expansion
+function toggleResultExpand(resultId) {
+    const icon = document.getElementById(`icon-${resultId}`);
+    if (icon.textContent === '▶') {
+        icon.textContent = '▼';
+    } else {
+        icon.textContent = '▶';
+    }
+}
+
+// Toggle full content visibility
+function toggleFullContent(contentId, resultId) {
+    const content = document.getElementById(contentId);
+    const textEl = document.getElementById(`expand-text-${resultId}`);
+    const isCollapsed = content.classList.contains('collapsed');
+    
+    content.classList.toggle('collapsed');
+    textEl.textContent = isCollapsed ? 'Hide Full Document' : 'Read Full Document';
+}
+
+// Explain search result with AI
+async function explainWithAI(explainId, resultIndex) {
+    const explainDiv = document.getElementById(explainId);
+    const result = window.currentSearchResults[resultIndex];
+    
+    // Toggle if already open
+    if (!explainDiv.classList.contains('collapsed') && explainDiv.querySelector('.ai-response')) {
+        explainDiv.classList.add('collapsed');
+        return;
+    }
+    
+    explainDiv.classList.remove('collapsed');
+    explainDiv.innerHTML = '<div class="ai-loading">🤖 Analyzing document with AI...</div>';
+    
+    try {
+        const response = await fetch('https://pedopedia.onrender.com/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: `Explain this court document in simple, layman's terms. What does it mean? What's important? Be concise and clear:\n\nDocument: ${result.title}\nContent: ${result.content.substring(0, 2000)}`
+            })
+        });
+        
+        if (!response.ok) throw new Error('AI service unavailable');
+        
+        const data = await response.json();
+        explainDiv.innerHTML = `
+            <div class="ai-response">
+                <div class="ai-header">🤖 AI Explanation (Simple Terms)</div>
+                <div class="ai-text">${escapeHtml(data.response).replace(/\n/g, '<br>')}</div>
+            </div>
+        `;
+    } catch (error) {
+        explainDiv.innerHTML = `
+            <div class="ai-error">
+                ⚠️ AI explanation unavailable. The AI service may be down or you may need to add an API key to the backend.
+            </div>
+        `;
+    }
 }
