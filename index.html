@@ -14,12 +14,12 @@
     <div id="chatWidget" class="chat-widget collapsed">
         <div class="chat-header" onclick="toggleChat()">
             <span class="chat-title">Ask AI About Documents</span>
-            <span class="chat-toggle">▼</span>
+            <span class="chat-toggle">💬</span>
         </div>
         <div class="chat-body">
             <div id="chatMessages" class="chat-messages"></div>
             <div class="chat-input-container">
-                <input type="text" id="chatInput" placeholder="Ask anything about the documents..." />
+                <input type="text" id="chatInput" placeholder="Ask anything about the documents..." onkeypress="if(event.key==='Enter') sendMessage()" />
                 <button id="chatSend" onclick="sendMessage()">Send</button>
             </div>
         </div>

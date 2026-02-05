@@ -317,22 +317,39 @@ footer p {
     color: #ffffff;
 }
 
-/* Chat Widget */
+/* Chat Widget - Floating Bubble Design */
 .chat-widget {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 400px;
-    max-height: 600px;
-    background: #1a1a1a;
-    border: 3px solid #dc2626;
-    box-shadow: 0 0 40px rgba(220, 38, 38, 0.5);
+    bottom: 30px;
+    right: 30px;
     z-index: 1000;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
 .chat-widget.collapsed {
-    max-height: 60px;
+    width: 70px;
+    height: 70px;
+}
+
+.chat-widget.collapsed .chat-header {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.6);
+}
+
+.chat-widget.collapsed .chat-title {
+    display: none;
+}
+
+.chat-widget.collapsed .chat-toggle {
+    display: block;
+    font-size: 2rem;
 }
 
 .chat-header {
@@ -346,14 +363,24 @@ footer p {
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #ffffff;
+    border: 3px solid #7f1d1d;
+    transition: all 0.3s;
+}
+
+.chat-widget:not(.collapsed) {
+    width: 380px;
+    max-height: 600px;
+    background: #1a1a1a;
+    border: 3px solid #dc2626;
+    box-shadow: 0 0 40px rgba(220, 38, 38, 0.5);
 }
 
 .chat-toggle {
     transition: transform 0.3s;
 }
 
-.chat-widget.collapsed .chat-toggle {
-    transform: rotate(-90deg);
+.chat-widget:not(.collapsed) .chat-toggle {
+    transform: rotate(180deg);
 }
 
 .chat-body {
@@ -504,18 +531,152 @@ footer p {
     font-weight: 800;
 }
 
+/* Mobile Responsive Design */
 @media (max-width: 768px) {
-    header h1 {
-        font-size: 2rem;
-        letter-spacing: 4px;
+    body {
+        padding: 10px;
     }
     
-    .chat-widget {
-        width: calc(100% - 40px);
-        right: 20px;
+    .container {
+        border-width: 2px;
+    }
+    
+    .banner-container {
+        height: 150px;
+    }
+    
+    header {
+        padding: 20px 15px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+        letter-spacing: 3px;
+    }
+    
+    .subtitle {
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+    }
+    
+    .header-logo {
+        max-width: 100px;
+        margin-bottom: 10px;
+    }
+    
+    .search-section {
+        padding: 20px 15px;
     }
     
     .search-bar {
         flex-direction: column;
+    }
+    
+    #searchInput {
+        padding: 14px 18px;
+        font-size: 1rem;
+    }
+    
+    #searchBtn {
+        padding: 14px 30px;
+        width: 100%;
+        font-size: 1rem;
+    }
+    
+    .search-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .stats {
+        padding: 12px 15px;
+        font-size: 0.85rem;
+    }
+    
+    .results {
+        padding: 20px 15px;
+    }
+    
+    .welcome-message h2 {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .welcome-message p {
+        font-size: 0.95rem;
+    }
+    
+    .note {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+    
+    .document-library {
+        padding: 15px;
+    }
+    
+    .library-toggle {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+    }
+    
+    footer {
+        padding: 20px 15px;
+        font-size: 0.8rem;
+    }
+    
+    /* Mobile Chat Widget */
+    .chat-widget.collapsed {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .chat-widget.collapsed .chat-header {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .chat-widget:not(.collapsed) {
+        width: calc(100vw - 30px);
+        max-width: 380px;
+        right: 15px;
+        bottom: 15px;
+    }
+    
+    .chat-body {
+        height: 400px;
+    }
+    
+    .chat-input-container {
+        padding: 10px;
+    }
+    
+    #chatInput {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    
+    #chatSend {
+        padding: 10px 18px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .subtitle {
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+    }
+    
+    .welcome-message h2 {
+        font-size: 1.2rem;
     }
 }
