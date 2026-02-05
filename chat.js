@@ -1,23 +1,11 @@
 // AI Chat functionality
-// IMPORTANT: The API key should be stored server-side, not in this file
-// For now, user needs to set it up properly
+// API key is now stored as GitHub Secret and used server-side
 
 let chatHistory = [];
-let apiKey = null;
 
-// Load API key from environment or prompt user
+// No need to initialize API key - it's server-side now
 async function initializeChat() {
-    // Try to load from server endpoint (if you set one up)
-    try {
-        const response = await fetch('/api/config');
-        if (response.ok) {
-            const config = await response.json();
-            apiKey = config.apiKey;
-        }
-    } catch (e) {
-        // If no server endpoint, user must enter API key
-        console.log('No API endpoint found. User must configure API key.');
-    }
+    console.log('Chat initialized - using secure server-side API');
 }
 
 function toggleChat() {
@@ -30,12 +18,6 @@ async function sendMessage() {
     const message = input.value.trim();
     
     if (!message) return;
-    
-    // Check if API key is set
-    if (!apiKey) {
-        showChatMessage('error', '⚠️ API KEY NOT CONFIGURED. Please set up your OpenAI API key in the .env file and create a server endpoint, OR use the simple version without AI chat.');
-        return;
-    }
     
     // Add user message to chat
     showChatMessage('user', message);
@@ -54,20 +36,12 @@ async function sendMessage() {
         // Prepare context from documents
         const context = prepareDocumentContext(message);
         
-        // Call OpenAI API
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: 'gpt-4',
-                messages: [
-                    {
-                        role: 'system',
-                        content: `You are an AI assistant helping users understand official Epstein court documents. 
-                        
+        // Prepare messages for API
+        const messages = [
+            {
+                role: 'system',
+                content: `You are an AI assistant helping users understand official Epstein court documents. 
+                
 CRITICAL RULES:
 1. ONLY provide information based on the actual documents in the database
 2. NEVER speculate or make assumptions
@@ -78,16 +52,22 @@ CRITICAL RULES:
 
 Context from documents:
 ${context}`
-                    },
-                    ...chatHistory
-                ],
-                temperature: 0.3,
-                max_tokens: 1000
-            })
+            },
+            ...chatHistory
+        ];
+        
+        // Call our secure server-side API endpoint
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ messages })
         });
         
         if (!response.ok) {
-            throw new Error(`API Error: ${response.status}`);
+            const errorData = await response.json();
+            throw new Error(errorData.error || `API Error: ${response.status}`);
         }
         
         const data = await response.json();
@@ -113,7 +93,7 @@ ${context}`
         const thinkingEl = document.getElementById(thinkingId);
         if (thinkingEl) thinkingEl.remove();
         
-        showChatMessage('error', `❌ Error: ${error.message}. Please check your API key configuration.`);
+        showChatMessage('error', `❌ Error: ${error.message}\n\nMake sure you've deployed to Vercel/Netlify and set the OPENAI_API_KEY secret.`);
     }
 }
 
