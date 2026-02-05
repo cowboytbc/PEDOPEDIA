@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epstein Files Search - Official Court Documents</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- AI Chat Widget -->
+    <div id="chatWidget" class="chat-widget collapsed">
+        <div class="chat-header" onclick="toggleChat()">
+            <span class="chat-title">🤖 Ask AI About Documents</span>
+            <span class="chat-toggle">▼</span>
+        </div>
+        <div class="chat-body">
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Ask anything about the documents..." />
+                <button id="chatSend" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="banner-container">
+                <!-- User can add their banner image here -->
+                <img src="banner.png" alt="Banner" class="header-banner" onerror="this.style.display='none'">
+            </div>
+            <div class="header-content">
+                <img src="logo.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+                <h1>EPSTEIN FILES SEARCH</h1>
+                <p class="subtitle">OFFICIAL COURT DOCUMENTS • DEPOSITIONS • EVIDENCE</p>
+            </div>
+        </header>
+
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for names, terms, or phrases...">
+                <button id="searchBtn">Search</button>
+            </div>
+            <div class="search-options">
+                <label>
+                    <input type="checkbox" id="caseInsensitive" checked>
+                    Case insensitive
+                </label>
+                <label>
+                    <input type="checkbox" id="exactMatch">
+                    Exact match only
+                </label>
+            </div>
+        </div>
+
+        <div id="stats" class="stats"></div>
+
+        <!-- Document Library -->
+        <div class="document-library">
+            <button class="library-toggle" onclick="toggleLibrary()">
+                📚 View Document Library (<span id="docCount">0</span> files)
+            </button>
+            <div id="libraryPanel" class="library-panel collapsed">
+                <h3>Included Documents</h3>
+                <div id="documentList" class="document-list"></div>
+            </div>
+        </div>
+
+        <div id="results" class="results">
+            <div class="welcome-message">
+                <h2>SEARCH THE TRUTH</h2>
+                <p>This database contains <strong>ONLY OFFICIAL COURT DOCUMENTS</strong> from verified sources.</p>
+                <p>No speculation. No conspiracy theories. Just facts from official records.</p>
+                <div class="note">
+                    <strong>⚖️ Sources:</strong> U.S. Federal Court Records • Depositions • Unsealed Evidence • Flight Logs
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>⚖️ Data source: Official U.S. Federal Court Documents • CourtListener • PACER</p>
+            <p>Last updated: <span id="lastUpdate">--</span> • <span id="totalDocs">0</span> documents indexed</p>
+            <p class="disclaimer">All documents are publicly available official court records</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>

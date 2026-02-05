@@ -1,0 +1,29 @@
+{
+  "lastUpdated": "2026-02-04",
+  "documents": [
+    {
+      "id": 1,
+      "title": "Sample Document - Flight Logs",
+      "source": "Court Document - Case 1:15-cv-07433",
+      "date": "Various dates",
+      "page": "Multiple",
+      "content": "This is a sample document entry. Replace this file with actual official Epstein documents. Flight logs contain records of passengers on private aircraft. To use this search tool effectively, you need to: 1) Obtain official court documents from public sources like CourtListener.com or official court records. 2) Extract text from PDFs using tools like Adobe Acrobat or online PDF to text converters. 3) Add each document as an entry in this JSON file following this format."
+    },
+    {
+      "id": 2,
+      "title": "Sample Document - Deposition Excerpt",
+      "source": "Deposition Transcript - Doe v. Maxwell",
+      "date": "2016-04-05",
+      "page": "45-48",
+      "content": "Sample deposition content. This should contain actual text extracted from official court depositions. When adding real documents, include the case name, date, page numbers, and verbatim text from the official transcripts. Names mentioned in depositions should appear exactly as they do in the official documents."
+    },
+    {
+      "id": 3,
+      "title": "Instructions for Adding Real Documents",
+      "source": "README",
+      "date": "2026-02-04",
+      "page": "N/A",
+      "content": "To populate this database with real documents: Visit CourtListener.com and search for Epstein-related cases. Download official PDF documents from court websites. Use PDF text extraction tools to convert documents to plain text. For each document, create a JSON entry with: title (document name), source (case number or document ID), date (document date), page (page numbers), and content (the extracted text). Ensure you only use publicly released, official documents. Do not include speculation or unofficial sources. Names of individuals should appear exactly as written in the official documents."
+    }
+  ]
+}

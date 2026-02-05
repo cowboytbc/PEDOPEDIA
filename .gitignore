@@ -1,0 +1,11 @@
+# Git ignore file
+.env
+*.pyc
+__pycache__/
+.venv/
+venv/
+epstein_documents/pdfs/*.pdf
+node_modules/
+.DS_Store
+download_log.json
+*.log

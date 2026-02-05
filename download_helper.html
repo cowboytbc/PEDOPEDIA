@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epstein Document Download Helper</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        .alert {
+            background: #fef08a;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .case-section {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .case-title {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .case-meta {
+            color: #718096;
+            margin-bottom: 20px;
+        }
+        .steps {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        .step {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        .step::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 10px 10px 0;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .doc-list {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .doc-item {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .doc-item:last-child {
+            border-bottom: none;
+        }
+        .doc-number {
+            font-weight: 600;
+            color: #667eea;
+            min-width: 80px;
+        }
+        .doc-desc {
+            flex: 1;
+            color: #4a5568;
+        }
+        .progress-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            border-radius: 8px;
+        }
+        .tip {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚖️ Epstein Document Download Helper</h1>
+        <p class="subtitle">Complete guide to manually downloading ALL official court documents</p>
+
+        <div class="alert">
+            <strong>📌 Important:</strong> CourtListener blocks automated downloads. This tool guides you through manual downloading of ALL documents systematically.
+        </div>
+
+        <!-- CASE 1: Giuffre v. Maxwell -->
+        <div class="case-section">
+            <div class="case-title">📁 Case 1: Giuffre v. Maxwell</div>
+            <div class="case-meta">
+                <strong>Case Number:</strong> 1:15-cv-07433-LAP<br>
+                <strong>Court:</strong> S.D. New York<br>
+                <strong>Documents:</strong> 200-500+ unsealed documents<br>
+                <strong>Status:</strong> Most comprehensive source
+            </div>
+
+            <div class="steps">
+                <h3 style="margin-bottom: 15px;">Download Instructions:</h3>
+                
+                <div class="step">
+                    <strong>Step 1:</strong> Open the case docket
+                    <br>
+                    <a href="https://www.courtlistener.com/docket/4355308/giuffre-v-maxwell/" target="_blank" class="btn">
+                        Open Giuffre v. Maxwell Docket
+                    </a>
+                </div>
+
+                <div class="step">
+                    <strong>Step 2:</strong> Scroll through ALL docket entries (there are many!)
+                </div>
+
+                <div class="step">
+                    <strong>Step 3:</strong> For each entry with a PDF icon, click "Download PDF"
+                </div>
+
+                <div class="step">
+                    <strong>Step 4:</strong> Save PDFs to: <code>epstein_documents/pdfs/</code>
+                </div>
+
+                <div class="step">
+                    <strong>Step 5:</strong> Name files as: <code>Giuffre_Maxwell_[entry#]_[description].pdf</code>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Pro Tip:</strong> Focus on unsealed depositions (entries #50-100+), flight logs, and email exhibits. These contain the most substantive information.
+            </div>
+
+            <div class="doc-list">
+                <h4 style="margin-bottom: 15px;">Key Documents to Download:</h4>
+                <div class="doc-item">
+                    <span class="doc-number">Doc #1</span>
+                    <span class="doc-desc">Complaint - Original filing</span>
+                </div>
+                <div class="doc-item">
+                    <span class="doc-number">Doc #5-13</span>
+                    <span class="doc-desc">Motion exhibits (flight logs, contact info)</span>
+                </div>
+                <div class="doc-item">
+                    <span class="doc-number">Doc #50</span>
+                    <span class="doc-desc">Various depositions (unsealed)</span>
+                </div>
+                <div class="doc-item">
+                    <span class="doc-number">Doc #53</span>
+                    <span class="doc-desc">Court opinion with details</span>
+                </div>
+                <div class="doc-item">
+                    <span class="doc-number">Doc #82</span>
+                    <span class="doc-desc">Memorandum with exhibits</span>
+                </div>
+                <div class="doc-item">
+                    <span class="doc-number">Many more</span>
+                    <span class="doc-desc">Browse all entries - many contain multiple attachments</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE 2: United States v. Epstein -->
+        <div class="case-section">
+            <div class="case-title">📁 Case 2: United States v. Epstein (Criminal)</div>
+            <div class="case-meta">
+                <strong>Case Number:</strong> 1:08-cr-10435<br>
+                <strong>Court:</strong> S.D. Florida<br>
+                <strong>Documents:</strong> 50-100 documents<br>
+                <strong>Status:</strong> Criminal case files
+            </div>
+
+            <div class="steps">
+                <h3 style="margin-bottom: 15px;">Download Instructions:</h3>
+                
+                <div class="step">
+                    <strong>Option A:</strong> Search on CourtListener for "United States v. Epstein 1:08-cr-10435"
+                </div>
+
+                <div class="step">
+                    <strong>Option B:</strong> Use PACER directly (requires free account)
+                    <br>
+                    <a href="https://pacer.uscourts.gov/" target="_blank" class="btn">
+                        PACER Access
+                    </a>
+                </div>
+
+                <div class="step">
+                    <strong>Download:</strong> All publicly available filings
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE 3: United States v. Maxwell -->
+        <div class="case-section">
+            <div class="case-title">📁 Case 3: United States v. Maxwell (Criminal)</div>
+            <div class="case-meta">
+                <strong>Case Number:</strong> 1:20-cr-00330<br>
+                <strong>Court:</strong> S.D. New York<br>
+                <strong>Documents:</strong> 100-200 trial documents<br>
+                <strong>Status:</strong> Criminal trial records
+            </div>
+
+            <div class="steps">
+                <h3 style="margin-bottom: 15px;">Download Instructions:</h3>
+                
+                <div class="step">
+                    Search CourtListener or PACER for case number 1:20-cr-00330
+                </div>
+
+                <div class="step">
+                    Download trial exhibits, motions, and sealed document releases
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Sources -->
+        <div class="case-section">
+            <div class="case-title">📁 Additional Official Sources</div>
+            
+            <div class="steps">
+                <h3 style="margin-bottom: 15px;">Other Places to Find Documents:</h3>
+                
+                <div class="step">
+                    <strong>FBI Vault:</strong> Search "Epstein" for released FBI documents
+                    <br>
+                    <a href="https://vault.fbi.gov/" target="_blank" class="btn">
+                        FBI Records Vault
+                    </a>
+                </div>
+
+                <div class="step">
+                    <strong>DocumentCloud:</strong> News organizations have uploaded many documents
+                    <br>
+                    <a href="https://www.documentcloud.org/app?q=epstein" target="_blank" class="btn">
+                        DocumentCloud Search
+                    </a>
+                </div>
+
+                <div class="step">
+                    <strong>News Archives:</strong> Miami Herald, NYT, ProPublica have document collections
+                </div>
+            </div>
+        </div>
+
+        <!-- After Downloading -->
+        <div class="progress-section">
+            <h2 style="margin-bottom: 15px;">✅ After Downloading PDFs</h2>
+            
+            <p style="margin-bottom: 15px;">Once you've downloaded PDFs, run this command to extract all text:</p>
+            
+            <code style="display: block; padding: 15px; font-size: 1.1rem;">
+                python process_all_pdfs.py
+            </code>
+
+            <p style="margin-top: 15px;">This will:</p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li>Extract text from ALL PDFs</li>
+                <li>Create your searchable documents.json database</li>
+                <li>Generate statistics about your collection</li>
+            </ul>
+
+            <p style="margin-top: 15px;">Then open <code>index.html</code> to search everything!</p>
+        </div>
+
+        <div class="tip">
+            <strong>📊 Expected Results:</strong> If you download systematically from Giuffre v. Maxwell alone, you'll have 200-500+ official documents with depositions, emails, flight logs, and witness statements. This is the most comprehensive publicly available collection of Epstein court records.
+        </div>
+
+        <div class="tip" style="margin-top: 15px;">
+            <strong>⚖️ Legal Note:</strong> All documents linked here are publicly available official court records. Download and use responsibly for fact-based research.
+        </div>
+    </div>
+</body>
+</html>
