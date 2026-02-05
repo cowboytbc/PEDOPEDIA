@@ -202,17 +202,18 @@ header h1 {
 .note {
     margin-top: 30px;
     padding: 20px;
-    background: #0a0a0a;
+    background: #ffffff;
     border: 3px solid #7f1d1d;
     border-radius: 0;
     text-align: left;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    color: #0a0a0a;
 }
 
 .note strong {
-    color: #dc2626;
+    color: #0a0a0a;
     font-weight: 800;
 }
 
