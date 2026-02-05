@@ -56,8 +56,11 @@ ${context}`
             ...chatHistory
         ];
         
-        // Call our secure server-side API endpoint
-        const response = await fetch('/api/chat', {
+        // Call our secure server-side API endpoint on Render
+        // REPLACE THIS URL WITH YOUR ACTUAL RENDER URL!
+        const RENDER_API_URL = 'https://YOUR-RENDER-URL.onrender.com/api/chat';
+        
+        const response = await fetch(RENDER_API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
