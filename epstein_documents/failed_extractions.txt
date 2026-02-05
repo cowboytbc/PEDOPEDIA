@@ -1,0 +1,6 @@
+Files that failed text extraction:
+
+gov.uscourts.nysd.591653.4.0 (1).pdf
+gov.uscourts.nysd.591653.4.0 (2).pdf
+gov.uscourts.nysd.591653.4.0 (3).pdf
+gov.uscourts.nysd.591653.4.0.pdf
