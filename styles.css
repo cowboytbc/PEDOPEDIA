@@ -345,13 +345,10 @@ footer p {
 }
 
 .chat-widget.collapsed .chat-header::before {
-    content: '';
-    width: 35px;
-    height: 35px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    content: '?';
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: white;
 }
 
 .chat-widget.collapsed .chat-title {
