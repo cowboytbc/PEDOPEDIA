@@ -237,3 +237,46 @@ function updateLastUpdated(date) {
         lastUpdateSpan.textContent = 'No data loaded';
     }
 }
+
+// Populate document library
+function populateDocumentLibrary() {
+    const docList = document.getElementById('documentList');
+    const docCount = document.getElementById('docCount');
+    
+    if (!docList) return;
+    
+    docCount.textContent = documentDatabase.length;
+    
+    if (documentDatabase.length === 0) {
+        docList.innerHTML = '<p style="color: #fca5a5; padding: 20px;">No documents loaded yet.</p>';
+        return;
+    }
+    
+    docList.innerHTML = documentDatabase.map((doc, index) => {
+        // Extract case number from filename for CourtListener URL
+        const filename = doc.filename || '';
+        const courtListenerUrl = `https://www.courtlistener.com/docket/4355308/giuffre-v-maxwell/`;
+        
+        return `
+            <div class="doc-list-item">
+                <strong>${index + 1}.</strong> ${escapeHtml(doc.title || 'Untitled Document')}
+                <br>
+                <span style="font-size: 0.85em; color: #fca5a5;">
+                    ${escapeHtml(doc.source || 'Unknown source')} 
+                    ${doc.date ? ` • ${escapeHtml(doc.date)}` : ''}
+                </span>
+                <br>
+                <a href="${courtListenerUrl}" target="_blank" rel="noopener noreferrer" 
+                   style="color: #dc2626; font-weight: 700; text-decoration: none; font-size: 0.9em;">
+                    📄 View on CourtListener →
+                </a>
+            </div>
+        `;
+    }).join('');
+}
+
+// Toggle document library visibility
+function toggleLibrary() {
+    const panel = document.getElementById('libraryPanel');
+    panel.classList.toggle('collapsed');
+}
