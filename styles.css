@@ -186,12 +186,15 @@ header h1 {
 }
 
 .welcome-message h2 {
-    color: #2d3748;
+    color: #dc2626;
     margin-bottom: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
 }
 
 .welcome-message p {
-    color: #4a5568;
+    color: #ffffff;
     margin-bottom: 15px;
     font-size: 1.1rem;
 }
@@ -199,9 +202,9 @@ header h1 {
 .note {
     margin-top: 30px;
     padding: 20px;
-    background: #edf2f7;
-    border-left: 4px solid #667eea;
-    border-radius: 4px;
+    background: #0a0a0a;
+    border: 3px solid #7f1d1d;
+    border-radius: 0;
     text-align: left;
     max-width: 600px;
     margin-left: auto;
@@ -209,7 +212,8 @@ header h1 {
 }
 
 .note strong {
-    color: #2d3748;
+    color: #dc2626;
+    font-weight: 800;
 }
 
 .result-item {
