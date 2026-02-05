@@ -23,12 +23,19 @@ def extract_text_from_pdf(pdf_path):
         with pdfplumber.open(pdf_path) as pdf:
             full_text = ""
             for page_num, page in enumerate(pdf.pages, 1):
-                text = page.extract_text()
-                if text:
-                    full_text += text + "\n\n"
-            return full_text.strip()
+                try:
+                    text = page.extract_text()
+                    if text:
+                        full_text += text + "\n\n"
+                except Exception as page_error:
+                    # Skip problematic pages but continue with rest of document
+                    print(f"      ⚠️  Skipping page {page_num}: {str(page_error)[:50]}")
+                    continue
+            return full_text.strip() if full_text.strip() else None
+    except KeyboardInterrupt:
+        raise  # Allow user to stop with Ctrl+C
     except Exception as e:
-        print(f"❌ Error extracting {pdf_path.name}: {e}")
+        print(f"      ❌ Error: {str(e)[:100]}")
         return None
 
 def parse_filename(filename):
@@ -70,29 +77,52 @@ def process_all_pdfs(pdfs_dir="epstein_documents/pdfs", output_file="documents.j
     for i, pdf_file in enumerate(pdf_files, 1):
         print(f"[{i}/{len(pdf_files)}] Processing: {pdf_file.name[:60]}...")
         
-        # Extract text
-        content = extract_text_from_pdf(pdf_file)
-        
-        if content:
-            # Parse filename for metadata
-            case_name, entry_num, description = parse_filename(pdf_file.name)
+        try:
+            # Extract text
+            content = extract_text_from_pdf(pdf_file)
             
-            # Create document entry
-            doc_entry = {
-                "id": i,
-                "title": description,
-                "source": f"{case_name} - Entry #{entry_num}",
-                "date": "Various",  # Could parse from content if needed
-                "page": "Multiple",
-                "content": content,
-                "filename": pdf_file.name
-            }
+            if content:
+                # Parse filename for metadata
+                case_name, entry_num, description = parse_filename(pdf_file.name)
+                
+                # Create document entry
+                doc_entry = {
+                    "id": i,
+                    "title": description,
+                    "source": f"{case_name} - Entry #{entry_num}",
+                    "date": "Various",  # Could parse from content if needed
+                    "page": "Multiple",
+                    "content": content,
+                    "filename": pdf_file.name
+                }
+                
+                documents.append(doc_entry)
+                print(f"   ✅ Extracted {len(content)} characters")
+            else:
+                failed.append(pdf_file.name)
+                print(f"   ⚠️  Failed to extract text")
             
-            documents.append(doc_entry)
-            print(f"   ✅ Extracted {len(content)} characters")
-        else:
+            # Save checkpoint every 100 files
+            if i % 100 == 0:
+                checkpoint_data = {
+                    "lastUpdated": datetime.now().strftime("%Y-%m-%d"),
+                    "totalDocuments": len(documents),
+                    "source": "Official court documents from CourtListener.com",
+                    "disclaimer": "All documents are publicly available official court records",
+                    "documents": documents,
+                    "checkpoint": f"{i}/{len(pdf_files)} files processed"
+                }
+                with open("documents_checkpoint.json", 'w', encoding='utf-8') as f:
+                    json.dump(checkpoint_data, f, indent=2, ensure_ascii=False)
+                print(f"\n   💾 Checkpoint saved: {i}/{len(pdf_files)} files\n")
+                
+        except KeyboardInterrupt:
+            print("\n\n⚠️  Processing interrupted by user. Saving progress...")
+            break
+        except Exception as e:
+            print(f"   ❌ Unexpected error: {str(e)[:100]}")
             failed.append(pdf_file.name)
-            print(f"   ⚠️  Failed to extract text")
+            continue
     
     # Create final JSON structure
     output_data = {
