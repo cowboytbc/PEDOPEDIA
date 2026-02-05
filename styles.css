@@ -9,11 +9,25 @@ body {
     background: #0a0a0a;
     background-image: 
         linear-gradient(rgba(220, 38, 38, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(220, 38, 38, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
+        linear-gradient(90deg, rgba(220, 38, 38, 0.1) 1px, transparent 1px),
+        radial-gradient(ellipse at top left, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(127, 29, 29, 0.2) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+    background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%;
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+    animation: backgroundShift 20s ease infinite;
     min-height: 100vh;
     padding: 20px;
     color: #ffffff;
+}
+
+@keyframes backgroundShift {
+    0%, 100% {
+        background-position: 0 0, 0 0, 0 0, 100% 100%, 0 0;
+    }
+    50% {
+        background-position: 50px 50px, 50px 50px, 100% 100%, 0 0, 100% 100%;
+    }
 }
 
 .container {
@@ -316,6 +330,59 @@ footer p {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #ffffff;
+}
+
+/* Crypto Footer Section */
+.crypto-footer {
+    margin-top: 30px;
+    padding: 25px;
+    background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
+    border-top: 3px solid #dc2626;
+    border-radius: 0;
+}
+
+.crypto-branding {
+    text-align: center;
+}
+
+.crypto-branding h3 {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 6px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-shadow: 
+        0 0 10px rgba(220, 38, 38, 0.8),
+        0 0 20px rgba(220, 38, 38, 0.6);
+}
+
+.crypto-ticker {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #fca5a5;
+    letter-spacing: 3px;
+    margin: 10px 0;
+}
+
+.crypto-ca {
+    font-size: 0.95rem;
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+.ca-address {
+    color: #dc2626;
+    font-family: monospace;
+    font-size: 0.85rem;
+    background: rgba(220, 38, 38, 0.1);
+    padding: 5px 15px;
+    border-radius: 0;
+    border: 1px solid #7f1d1d;
+    display: inline-block;
+    margin-left: 5px;
 }
 
 /* Chat Widget - Floating Bubble Design */
@@ -630,6 +697,22 @@ footer p {
     footer {
         padding: 20px 15px;
         font-size: 0.8rem;
+    }
+    
+    .crypto-footer {
+        padding: 15px;
+    }
+    
+    .crypto-branding h3 {
+        font-size: 1.3rem;
+    }
+    
+    .crypto-ticker {
+        font-size: 1rem;
+    }
+    
+    .ca-address {
+        font-size: 0.7rem;
     }
     
     /* Mobile Chat Widget */

@@ -84,18 +84,32 @@ class ComprehensiveEpsteinDownloader:
     def find_all_epstein_dockets(self):
         """Search CourtListener for ALL Epstein-related cases"""
         self.log("\n" + "="*70)
-        self.log("🔍 SEARCHING FOR ALL EPSTEIN-RELATED CASES")
+        self.log("🔍 SEARCHING FOR JEFFREY EPSTEIN SEX TRAFFICKING CASES")
         self.log("="*70)
         
         search_terms = [
-            "epstein",
+            "jeffrey epstein sex",
+            "jeffrey epstein minor",
+            "jeffrey epstein victim",
             "ghislaine maxwell",
-            "jeffrey epstein",
-            "jane doe epstein",
-            "epstein victims"
+            "epstein abuse",
+            "epstein trafficking",
+            "giuffre epstein",
+            "jane doe epstein abuse"
         ]
         
         all_dockets = set()
+        
+        # Blacklist - exclude these people who have nothing to do with Jeffrey Epstein
+        blacklist = [
+            'ronald epstein',
+            'matthew epstein',
+            'hayden epstein',
+            'melissa epstein',
+            'jeffrey m. epstein jr',
+            'jeffrey s epstein',
+            'bankruptcy'
+        ]
         
         for search_term in search_terms:
             self.log(f"\n🔎 Searching: {search_term}")
@@ -110,6 +124,12 @@ class ComprehensiveEpsteinDownloader:
                 
                 for link in links:
                     href = link.get_attribute('href')
+                    text = link.text.lower()
+                    
+                    # Skip if it's a blacklisted person/case
+                    if any(blocked in text.lower() or blocked in href.lower() for blocked in blacklist):
+                        continue
+                        
                     if '/docket/' in href and href not in all_dockets:
                         all_dockets.add(href)
                         
@@ -143,39 +163,32 @@ class ComprehensiveEpsteinDownloader:
             except:
                 case_name = "Unknown Case"
             
-            # Find all document rows
-            rows = self.driver.find_elements(By.CSS_SELECTOR, "tr.docket-entry")
-            self.log(f"📄 Found {len(rows)} document entries")
+            # Find all PDF links directly on the page
+            pdf_links = self.driver.find_elements(By.CSS_SELECTOR, "a[href*='.pdf'], a[href*='/pdf/']")
+            self.log(f"📄 Found {len(pdf_links)} PDF documents")
             
-            for i, row in enumerate(rows, 1):
+            if len(pdf_links) == 0:
+                self.log("   ⚠️ No PDFs found on this docket, skipping...")
+                return
+            
+            for i, pdf_link in enumerate(pdf_links, 1):
                 try:
-                    # Find PDF links in this row
-                    pdf_links = row.find_elements(By.CSS_SELECTOR, "a[href*='.pdf']")
+                    pdf_url = pdf_link.get_attribute('href')
                     
-                    if not pdf_links:
-                        continue
-                        
-                    for pdf_link in pdf_links:
-                        try:
-                            pdf_url = pdf_link.get_attribute('href')
-                            
-                            # Get document number from URL or row
-                            doc_match = re.search(r'/(\d+)/', pdf_url)
-                            doc_num = doc_match.group(1) if doc_match else str(i)
-                            
-                            # Download the PDF
-                            self.log(f"   [{i}/{len(rows)}] Downloading document #{doc_num}...")
-                            self.driver.get(pdf_url)
-                            time.sleep(2)  # Wait for download
-                            
-                            self.downloaded_count += 1
-                            
-                        except Exception as e:
-                            self.log(f"   ❌ Failed to download PDF: {e}")
-                            self.failed_count += 1
-                            
+                    # Get document number from URL
+                    doc_match = re.search(r'/(\d+)/', pdf_url)
+                    doc_num = doc_match.group(1) if doc_match else str(i)
+                    
+                    # Download the PDF
+                    self.log(f"   [{i}/{len(pdf_links)}] Downloading document #{doc_num}...")
+                    self.driver.get(pdf_url)
+                    time.sleep(2)  # Wait for download
+                    
+                    self.downloaded_count += 1
+                    
                 except Exception as e:
-                    self.log(f"   ⚠️ Error processing row {i}: {e}")
+                    self.log(f"   ❌ Failed to download PDF: {e}")
+                    self.failed_count += 1
                     
         except Exception as e:
             self.log(f"❌ Failed to process docket: {e}")
